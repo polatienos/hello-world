@@ -1,0 +1,92 @@
+#include <stdio.h>
+#define MAX 100
+
+
+int main(){
+
+    //inicializar
+    int maxlinha,maxcoluna,scan,aux,i,j,flagcoluna,flaglinha,auxflagcoeste,auxflaglnorte,auxflagcleste,auxflaglsul,orientacao,k,z;
+    float matriz[MAX][MAX];
+    //scaneando linhas e colunas
+    scanf("%d %d", &maxlinha,&maxcoluna);
+    //logica de colocar o numero no local certo na matriz e suas atribuicoes
+    i = maxlinha - 1;
+    j = maxcoluna - 1;
+    flagcoluna = 1;
+    flaglinha = 0;
+    //flagcoluna sempre vai ser 1 a primeira vez ou seja (ON) e orientacao para o norte
+    //auxflagc(coluna) e auxflagl(linha) sao a logica do limite das linhas a serem postas
+    //orientacao 2 = sul 6 = leste 8 = norte 4 = oeste (botaos do numpad)
+    orientacao = 8;
+    auxflagcoeste = 0;
+    auxflaglnorte = 0;
+    auxflagcleste = maxcoluna - 1;
+    auxflaglsul = maxlinha - 1;
+    scan = 0;
+    //colocando os valores na matriz
+    while( scan <= maxlinha*maxcoluna - 1){
+        //scaneando valor da linha um de cada vez
+        scanf("%d",&aux);
+        scan++;
+        //logica
+        matriz[i][j] = aux;
+        if (flagcoluna == 1 && orientacao == 8) {
+            if (i != auxflaglnorte){
+                i = i -1;
+            }
+            if (i == auxflaglnorte){
+                flagcoluna = 0;
+                flaglinha = 1;
+                auxflaglnorte = auxflaglnorte + 1;
+                orientacao = 4;
+            }
+        }
+        if (flaglinha == 1 && orientacao == 4) {
+            if (j != auxflagcoeste){
+                j = j -1;
+            }
+            if (j == auxflagcoeste){
+                flagcoluna = 1;
+                flaglinha = 0;
+                auxflagcoeste = auxflagcoeste + 1;
+                orientacao = 2;
+            }
+        }
+        if (flagcoluna == 1 && orientacao == 2) {
+            if (i != auxflaglsul){
+                i = i + 1;
+            }
+            if (i == auxflaglsul){
+                flagcoluna = 0;
+                flaglinha = 1;
+                auxflaglsul = auxflaglsul - 1;
+                orientacao = 6;
+            }
+        }
+        if (flaglinha == 1 && orientacao == 6) {
+            if (j != auxflagcleste){
+                j = j -1;
+            }
+            if (j == auxflagcleste){
+                flagcoluna = 1;
+                flaglinha = 0;
+                auxflagcleste = auxflagcleste - 1;
+                orientacao = 8;
+            }
+        }
+    }
+    printf("Maxcoluna:%d Maxlinha:%d", maxcoluna, maxlinha);
+    //printando tal matriz no formato desejado
+    k = 0;
+    z = 0;
+    while (k < maxlinha){
+        while (z < maxcoluna){
+            printf("\r%d",matriz[i][j]);
+            printf("issotemqueserprintado9vezes");
+            z = z + 1;
+        }
+        k = k + 1;
+        z = 0;
+    }
+    return 0;
+}
